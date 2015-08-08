@@ -33,7 +33,7 @@ def _generate_response(request, processor):
                                 context_instance=RequestContext(request))
 
 def xml_response(request, template, tv):
-    return render_to_response(template, tv, mimetype="application/xml")
+    return render_to_response(template, tv, content_type="application/xml")
 
 @csrf_exempt
 def login_begin(request, *args, **kwargs):
@@ -56,8 +56,8 @@ def login_init(request, resource, **kwargs):
     Initiates an IdP-initiated link to a simple SP resource/target URL.
     """
     sp_config = metadata.get_config_for_resource(resource)
-    proc_path = sp_config['processor']
-    proc = registry.get_processor(proc_path)
+    proc = registry.get_processor(sp_config)
+
     try:
         linkdict = dict(metadata.get_links(sp_config))
         pattern = linkdict[resource]
