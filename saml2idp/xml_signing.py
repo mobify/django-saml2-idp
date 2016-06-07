@@ -60,29 +60,33 @@ def get_signature_xml(subject, reference_uri):
     """
     Returns XML Signature for subject.
     """
+
     logger.debug('get_signature_xml - Begin.')
     config = smd.SAML2IDP_CONFIG
 
     private_key = load_private_key(config)
     certificate = load_certificate(config)
 
-    logger.debug('Subject: ' + subject)
+    logger.debug('Subject: %s' % (subject,))
 
     # Hash the subject.
+    if isinstance(subject, text_type):
+        subject = subject.encode()
+
     subject_hash = hashlib.sha1()
     subject_hash.update(subject)
     subject_digest = nice64(subject_hash.digest())
-    logger.debug('Subject digest: ' + subject_digest)
+    logger.debug('Subject digest: %s' % (subject_digest,))
 
     # Create signed_info.
     signed_info = string.Template(SIGNED_INFO).substitute({
         'REFERENCE_URI': reference_uri,
         'SUBJECT_DIGEST': subject_digest,
-        })
-    logger.debug('SignedInfo XML: ' + signed_info)
+    })
+    logger.debug('SignedInfo XML: %s' % (signed_info,))
 
     rsa_signature = sign_with_rsa(private_key, signed_info)
-    logger.debug('RSA Signature: ' + rsa_signature)
+    logger.debug('RSA Signature: %s' % (rsa_signature,))
 
     # Put the signed_info and rsa_signature into the XML signature.
     signed_info_short = signed_info.replace(' xmlns:ds="http://www.w3.org/2000/09/xmldsig#"', '')
@@ -90,6 +94,6 @@ def get_signature_xml(subject, reference_uri):
         'RSA_SIGNATURE': rsa_signature,
         'SIGNED_INFO': signed_info_short,
         'CERTIFICATE': certificate,
-        })
-    logger.info('Signature XML: ' + signature_xml)
+    })
+    logger.info('Signature XML: %s' % (signature_xml,))
     return signature_xml

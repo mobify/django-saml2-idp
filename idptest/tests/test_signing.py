@@ -4,6 +4,7 @@ import os
 import string
 import unittest
 
+from django.utils.six import text_type
 from saml2idp import xml_render
 from saml2idp import xml_signing
 from saml2idp import saml2idp_metadata as smd
@@ -147,10 +148,10 @@ def test_loading_private_key():
     filename = os.path.join(os.getcwd(), 'keys/sample/sample-private-key.pem')
     config = {smd.PRIVATE_KEY_FILENAME: filename}
 
-    assert type(filename) is str
+    assert type(filename) is str  # This correctly differs on py2/py3
     xml_signing.load_private_key(config)
 
-    filename = unicode(filename)
+    filename = text_type(filename)
     config = {smd.PRIVATE_KEY_FILENAME: filename}
     xml_signing.load_private_key(config)
 
@@ -170,10 +171,10 @@ def test_loading_certificate_from_file():
     filename = os.path.join(os.getcwd(), 'keys/sample/sample-certificate.pem')
     config = {smd.CERTIFICATE_FILENAME: filename}
 
-    assert type(filename) is str
+    assert type(filename) is str  # This correctly differs on py2/py3
     xml_signing.load_certificate(config)
 
-    filename = unicode(filename)
+    filename = text_type(filename)
     config = {smd.CERTIFICATE_FILENAME: filename}
 
     certificate = xml_signing.load_certificate(config)

@@ -49,7 +49,7 @@ class SamlTestCase(TestCase):
         soup = BeautifulSoup(html, 'html.parser')
         inputtag = soup.findAll('input', {'name':'SAMLResponse'})[0]
         encoded_response = inputtag['value']
-        saml = codex.base64.b64decode(encoded_response)
+        saml = codex.base64.b64decode(encoded_response).decode('utf8')
         saml_soup = BeautifulSoup(saml, features='xml')
 
         self._html = html

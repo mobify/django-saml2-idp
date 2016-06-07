@@ -6,7 +6,7 @@ import base64
 # local imports:
 from . import base
 
-SAML_REQUEST = base64.b64encode(
+SAML_REQUEST = base64.b64encode((
     '<?xml version="1.0" encoding="UTF-8"?>'
     '<samlp:AuthnRequest '
     'AssertionConsumerServiceURL="https://login.salesforce.com" '
@@ -66,7 +66,8 @@ SAML_REQUEST = base64.b64encode(
     'sDB4siloTOcJ25/NsfPRoWDyvwax0aXDzsBRwJ5Qpr+ii3bUI1+QByEdxH4gZVHHu9fMG/+ePr9S'
     'Hhil20oycE7oe0xvQEad1Hs6xHCRDbJVIr4=</ds:X509Certificate></ds:X509Data>'
     '</ds:KeyInfo></ds:Signature></samlp:AuthnRequest>'
-    )
+).encode('utf8'))
+
 RELAY_STATE = '/home/home.jsp'
 REQUEST_DATA = {
     'SAMLRequest': SAML_REQUEST,
