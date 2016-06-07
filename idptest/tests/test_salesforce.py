@@ -4,7 +4,7 @@ Tests for the SalesForce processor.
 # standard library imports:
 import base64
 # local imports:
-import base
+from . import base
 
 SAML_REQUEST = base64.b64encode(
     '<?xml version="1.0" encoding="UTF-8"?>'
