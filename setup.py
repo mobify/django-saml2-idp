@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup
-import saml2idp
 
+import saml2idp
 
 with open('README.rst') as readme:
     description = readme.read()
@@ -23,7 +23,8 @@ setup(
         # We have to pin M2Crypto to version 0.22.3 because more recent
         # versions are failing due to issues with finding openssl libs.
         'M2Crypto==0.22.3',
-        'BeautifulSoup>=3.2.0',
+        'BeautifulSoup4>=4.4.0',
+        'lxml',
         'structlog'],
     license='MIT',
     packages=['saml2idp'],

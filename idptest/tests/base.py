@@ -3,7 +3,7 @@
 Tests for the Base Processor class.
 """
 from __future__ import absolute_import
-from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
+from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from django.test import TestCase
 
@@ -46,11 +46,11 @@ class SamlTestCase(TestCase):
 
         response = self.client.get(url, data=data, follow=True)
         html = response.content
-        soup = BeautifulSoup(html)
+        soup = BeautifulSoup(html, 'html.parser')
         inputtag = soup.findAll('input', {'name':'SAMLResponse'})[0]
         encoded_response = inputtag['value']
         saml = codex.base64.b64decode(encoded_response)
-        saml_soup = BeautifulStoneSoup(saml)
+        saml_soup = BeautifulSoup(saml, features='xml')
 
         self._html = html
         self._html_soup = soup
