@@ -34,20 +34,20 @@ class TestLoginView(TestCase):
         """
         GET request without SAMLResponse data should have failed.
         """
-        self.assertEquals(self.client.get('/idp/login/').status_code, 400)
+        self.assertEqual(self.client.get('/idp/login/').status_code, 400)
 
     def test_empty_post(self):
         """
         POST request without SAMLResponse data should have failed.
         """
-        self.assertEquals(self.client.post('/idp/login/').status_code, 400)
+        self.assertEqual(self.client.post('/idp/login/').status_code, 400)
 
     def _test_pre_redirect(self):
         self.assertFalse('SAMLRequest' in self.client.session)
         self.assertFalse('RelayState' in self.client.session)
 
     def _test_redirect(self, response):
-        self.assertEquals(response.status_code, HttpResponseRedirect.status_code)
+        self.assertEqual(response.status_code, HttpResponseRedirect.status_code)
         self.assertTrue(response['location'].endswith('/idp/login/process/'))
         self.assertEqual(self.client.session['SAMLRequest'], SAML_REQUEST)
         self.assertEqual(self.client.session['RelayState'], RELAY_STATE)

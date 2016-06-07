@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from __future__ import print_function
 
-from StringIO import StringIO
+from django.utils.six import StringIO
 from lxml import etree
 
 
