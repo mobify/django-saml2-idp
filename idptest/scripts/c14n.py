@@ -1,6 +1,9 @@
 #!/usr/bin/python
+from __future__ import print_function
+
 from StringIO import StringIO
 from lxml import etree
+
 
 def c14n(src):
     f = StringIO(src)
@@ -18,8 +21,8 @@ if __name__=="__main__":
 
     (options, args) = parser.parse_args()
     if len(args) < 1:
-        print "c14n - Canonicalize an XML file to stdout"
-        print "Usage: c14n [--fix] FILENAMES"
+        print("c14n - Canonicalize an XML file to stdout")
+        print("Usage: c14n [--fix] FILENAMES")
     else:
         for filename in args:
            # print 'Processing ' + filename + '...'
@@ -31,6 +34,6 @@ if __name__=="__main__":
                 g = open(filename, "w")
                 g.write(fixed)
                 g.close()
-                print "Fixed " + filename
+                print("Fixed " + filename)
             else:
-                print c14n(data)
+                print(c14n(data))
