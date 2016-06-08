@@ -1,7 +1,6 @@
 pytest
 pytest-django
 pytest-cov
-pdbpp
 tox
 
 # Release tools
