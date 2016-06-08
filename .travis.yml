@@ -1,19 +1,35 @@
 sudo: true
 language: python
-python:
-    - "2.7"
+
 addons:
   apt:
     packages:
       - swig
 
-env:
-    matrix:
-      - TOXENV=py27-dj15
-      - TOXENV=py27-dj16
-      - TOXENV=py27-dj17
-      - TOXENV=py27-dj18
-      - TOXENV=py27-dj19
+matrix:
+  include:
+    - env: TOXENV=py27-dj15
+      python: 2.7
+    - env: TOXENV=py27-dj16
+      python: 2.7
+    - env: TOXENV=py27-dj17
+      python: 2.7
+    - env: TOXENV=py27-dj18
+      python: 2.7
+    - env: TOXENV=py27-dj19
+      python: 2.7
+    - env: TOXENV=py34-dj17
+      python: 3.4
+    - env: TOXENV=py34-dj18
+      python: 3.4
+    - env: TOXENV=py34-dj19
+      python: 3.4
+    - env: TOXENV=py34-dj15
+      python: 3.4
+    - env: TOXENV=py35-dj18
+      python: 3.5
+    - env: TOXENV=py35-dj19
+      python: 3.5
 
 install:
     - pip install tox
