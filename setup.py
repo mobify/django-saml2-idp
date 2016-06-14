@@ -20,9 +20,7 @@ setup(
     long_description='\n\n'.join([description, changelog]),
     install_requires=[
         'Django>=1.4',
-        # We have to pin M2Crypto to version 0.22.3 because more recent
-        # versions are failing due to issues with finding openssl libs.
-        'M2Crypto==0.22.3',
+        'pyopenssl>=0.16',
         'BeautifulSoup4>=4.4.0',
         'lxml',
         'structlog'],

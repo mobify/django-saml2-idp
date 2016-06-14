@@ -1,11 +1,6 @@
 sudo: true
 language: python
 
-addons:
-  apt:
-    packages:
-      - swig
-
 matrix:
   include:
     - env: TOXENV=py27-dj15

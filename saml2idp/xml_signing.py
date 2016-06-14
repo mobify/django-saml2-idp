@@ -3,9 +3,12 @@
 Signing code goes here.
 """
 from __future__ import absolute_import
+import base64
 import hashlib
 import string
-import M2Crypto
+
+import OpenSSL.crypto
+from django.utils.six import text_type
 
 from . import saml2idp_metadata as smd
 from .codex import nice64
@@ -22,29 +25,35 @@ def load_certificate(config):
     certificate_filename = config.get(smd.CERTIFICATE_FILENAME)
     logger.info('Using certificate file: ' + certificate_filename)
 
-    certificate = M2Crypto.X509.load_cert(certificate_filename)
-    return ''.join(certificate.as_pem().split('\n')[1:-2])
+    certificate = OpenSSL.crypto.load_certificate(
+        OpenSSL.crypto.FILETYPE_PEM, open(certificate_filename, 'rb').read())
+
+    pem_bytes = OpenSSL.crypto.dump_certificate(
+        OpenSSL.crypto.FILETYPE_PEM, certificate)
+
+    # PEM files contain a base64 encoded string, so are fine to treat as ASCII
+    pem_str = ''.join(pem_bytes.decode('ascii').split('\n')[1:-2])
+
+    return pem_str
 
 
 def load_private_key(config):
     private_key_data = config.get(smd.PRIVATE_KEY_DATA)
 
     if private_key_data:
-        return M2Crypto.EVP.load_key_string(private_key_data)
+        return OpenSSL.crypto.load_privatekey(
+            OpenSSL.crypto.FILETYPE_PEM, private_key_data)
 
     private_key_file = config.get(smd.PRIVATE_KEY_FILENAME)
     logger.info('Using private key file: {}'.format(private_key_file))
 
-    # The filename need to be encoded because it is using a C extension under
-    # the hood which means it expects a 'const char*' type and will fail with
-    # unencoded unicode string.
-    return M2Crypto.EVP.load_key(private_key_file.encode('utf-8'))
+    return OpenSSL.crypto.load_privatekey(
+        OpenSSL.crypto.FILETYPE_PEM, open(private_key_file, 'rb').read())
 
 
 def sign_with_rsa(private_key, data):
-    private_key.sign_init()
-    private_key.sign_update(data)
-    return nice64(private_key.sign_final())
+    data = OpenSSL.crypto.sign(private_key, data, "sha1")
+    return base64.b64encode(data).decode('ascii')
 
 
 def get_signature_xml(subject, reference_uri):
