@@ -2,7 +2,8 @@
 """
 Tests for the Base Processor class.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from bs4 import BeautifulSoup
 from django.contrib.auth.models import User
 from django.test import TestCase

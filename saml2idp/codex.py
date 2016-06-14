@@ -1,3 +1,5 @@
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Portions borrowed from:
 # http://stackoverflow.com/questions/1089662/python-inflate-and-deflate-implementations
 import zlib

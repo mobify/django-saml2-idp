@@ -3,6 +3,8 @@ Django Settings that more closely resemble SAML Metadata.
 
 Detailed discussion is in doc/SETTINGS_AND_METADATA.txt.
 """
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 

@@ -1,6 +1,8 @@
 """
 Query metadata from settings.
 """
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # Django imports
 from django.core.exceptions import ImproperlyConfigured
 # Local imports

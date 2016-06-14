@@ -2,7 +2,8 @@
 """
 Functions for creating XML output.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import string
 
 from .xml_signing import get_signature_xml

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os
 import string
 import unittest
@@ -148,7 +149,7 @@ def test_loading_private_key():
     filename = os.path.join(os.getcwd(), 'keys/sample/sample-private-key.pem')
     config = {smd.PRIVATE_KEY_FILENAME: filename}
 
-    assert type(filename) is str  # This correctly differs on py2/py3
+    assert type(filename) is text_type
     xml_signing.load_private_key(config)
 
     filename = text_type(filename)
@@ -171,7 +172,7 @@ def test_loading_certificate_from_file():
     filename = os.path.join(os.getcwd(), 'keys/sample/sample-certificate.pem')
     config = {smd.CERTIFICATE_FILENAME: filename}
 
-    assert type(filename) is str  # This correctly differs on py2/py3
+    assert type(filename) is text_type
     xml_signing.load_certificate(config)
 
     filename = text_type(filename)

@@ -2,13 +2,14 @@
 """
 Signing code goes here.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import base64
 import hashlib
 import string
 
 import OpenSSL.crypto
-from django.utils.six import text_type
+from django.utils import six
 
 from . import saml2idp_metadata as smd
 from .codex import nice64
@@ -52,7 +53,11 @@ def load_private_key(config):
 
 
 def sign_with_rsa(private_key, data):
-    data = OpenSSL.crypto.sign(private_key, data, "sha1")
+    digest = "sha1"
+    # This needs to be bytes on py2, str on py3. This is very odd.
+    if six.PY2:
+        digest = digest.encode('ascii')
+    data = OpenSSL.crypto.sign(private_key, data, digest)
     return base64.b64encode(data).decode('ascii')
 
 
@@ -70,7 +75,7 @@ def get_signature_xml(subject, reference_uri):
     logger.debug('Subject: %s' % (subject,))
 
     # Hash the subject.
-    if isinstance(subject, text_type):
+    if isinstance(subject, six.text_type):
         subject = subject.encode()
 
     subject_hash = hashlib.sha1()

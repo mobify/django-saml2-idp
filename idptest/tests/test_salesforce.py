@@ -1,6 +1,8 @@
 """
 Tests for the SalesForce processor.
 """
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 # standard library imports:
 import base64
 # local imports:

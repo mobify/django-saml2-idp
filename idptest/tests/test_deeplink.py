@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
 """
 Tests for the demo AttributeProcessor and IdP-initiated deep-linking.
 """
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 from . import base
 
 

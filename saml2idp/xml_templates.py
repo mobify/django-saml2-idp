@@ -16,6 +16,8 @@ NOTE #3: I'm now leaning towards using lxml's E factory to do some of this.
     Look at the docs here: http://lxml.de/tutorial.html#the-e-factory
     Compare how the other python/saml libraries are using lxml.
 """
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 SIGNED_INFO = (
     '<ds:SignedInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">'
         '<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"></ds:CanonicalizationMethod>'

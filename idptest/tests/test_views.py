@@ -6,7 +6,8 @@ NOTE: These classes do not test anything SAML-related.
 Testing actual SAML functionality requires implementation-specific details,
 which should be put in another test module.
 """
-from __future__ import absolute_import
+from __future__ import absolute_import, division, print_function, unicode_literals
+
 import os
 import mock
 import pytest
